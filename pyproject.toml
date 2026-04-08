@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "evecli"
+name = "evecli-llm"
 version = "0.1.0"
 description = "A CLI backend for LLM assistants to manage EVE Online via the ESI API"
 readme = "README.md"
