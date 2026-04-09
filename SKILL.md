@@ -42,7 +42,9 @@ python -m pip install -e .
 ### Prerequisites
 
 - Check auth status first: `evecli auth status`
-- If not authenticated, run: `evecli auth login --client-id <client-id> --secret <secret-key>`
+- If not authenticated locally, run: `evecli auth login --client-id <client-id> --secret <secret-key>`
+- If `evecli` is running remotely without a local browser, start manual auth with: `evecli auth login --mode manual --client-id <client-id> --secret <secret-key>`
+- In manual mode, give the printed URL to the user, then finish auth with: `evecli auth login --mode manual --client-id <client-id> --secret <secret-key> --code '<callback-url-or-code>'`
 - If the user has not provided credentials yet, ask for the EVE application `client-id` and `secret`
 - Confirm the active character when needed: `evecli auth character`
 
@@ -52,9 +54,12 @@ For a fresh environment, follow this sequence:
 
 1. Install or verify `evecli`
 2. Run `evecli auth status`
-3. If needed, run `evecli auth login --client-id <client-id> --secret <secret-key>`
-4. Optionally run `evecli auth character` to confirm the correct character
-5. Execute the requested mail command
+3. If needed, run `evecli auth login --client-id <client-id> --secret <secret-key>` for local/browser login
+4. If login must happen through a remote agent/server, use the two-step manual flow instead:
+	`evecli auth login --mode manual --client-id <client-id> --secret <secret-key>`
+	`evecli auth login --mode manual --client-id <client-id> --secret <secret-key> --code '<callback-url-or-code>'`
+5. Optionally run `evecli auth character` to confirm the correct character
+6. Execute the requested mail command
 
 ### Commands Reference
 
@@ -124,6 +129,7 @@ Use `evecli mail delete <mail_id>` after confirming with the user.
 #### First-time setup for the user
 
 1. Install `evecli`
-2. Run `evecli auth login --client-id <client-id> --secret <secret-key>`
-3. Verify with `evecli auth status`
-4. Start with `evecli mail list --limit 20`
+2. Run `evecli auth login --client-id <client-id> --secret <secret-key>` for a local machine with browser access
+3. Or, for a remote agent/server, run the two-step manual login flow and give the user the printed URL
+4. Verify with `evecli auth status`
+5. Start with `evecli mail list --limit 20`

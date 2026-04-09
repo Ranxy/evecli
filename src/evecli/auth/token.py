@@ -8,6 +8,7 @@ from typing import Optional
 
 TOKEN_DIR = Path.home() / ".config" / "evecli"
 TOKEN_FILE = TOKEN_DIR / "tokens.json"
+PENDING_AUTH_FILE = TOKEN_DIR / "pending_auth.json"
 
 ESI_BASE = "https://esi.evetech.net/latest"
 SSO_TOKEN = "https://login.eveonline.com/v2/oauth/token"

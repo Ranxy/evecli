@@ -44,7 +44,7 @@ pip install -e .
 ### 1. Create an EVE Online Application
 
 1. Log in to the [EVE Online Developer Portal](https://developers.eveonline.com/)
-2. Create a new application with a callback URL of `http://localhost:6480/callback`
+2. Create a new application with a callback URL of `http://127.0.0.1:8088/callback`
 3. Copy the **Client ID** and **Secret Key**
 
 ### 2. Authenticate
@@ -54,6 +54,21 @@ evecli auth login --client-id <client-id> --secret <secret-key>
 ```
 
 This opens a browser for EVE Online OAuth2 authorization. Tokens are stored at `~/.config/evecli/tokens.json` and refreshed automatically.
+
+If `evecli` is running on a server or inside an agent environment without a usable browser, use manual mode instead:
+
+```bash
+evecli auth login --mode manual --client-id <client-id> --secret <secret-key>
+```
+
+This prints an EVE SSO authorization URL. Have the user open that URL on their own machine, complete the login, then copy either the full callback URL from the browser address bar or just the `code` query parameter back to the agent. The agent completes login with:
+
+```bash
+evecli auth login --mode manual --client-id <client-id> --secret <secret-key> --code '<callback-url-or-code>'
+```
+
+The manual flow uses the same registered callback URL. If the browser shows a failed localhost page after login, that is expected in remote mode; copy the URL from the address bar and submit it back to the agent.
+If you register a different callback port in the EVE developer portal, pass the same port to `evecli auth login --port <port>` in both manual steps.
 
 ### 3. Let Your LLM Assist Manage EVE
 
@@ -70,7 +85,7 @@ The LLM will use the `eve-mail` skill to execute the appropriate `evecli` comman
 
 | Command | Description |
 |---------|-------------|
-| `evecli auth login` | Authenticate via EVE SSO OAuth2 |
+| `evecli auth login` | Authenticate via EVE SSO OAuth2, with `--mode browser` or `--mode manual` |
 | `evecli auth status` | Show auth status and token expiry |
 | `evecli auth logout` | Remove stored tokens |
 | `evecli auth character` | Show authenticated character info |
