@@ -30,6 +30,12 @@ EVE Online ESI API
 ## Installation
 
 ```bash
+python -m pip install evecli-llm
+```
+
+For local development:
+
+```bash
 pip install -e .
 ```
 
